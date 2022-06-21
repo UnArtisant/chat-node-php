@@ -59,7 +59,13 @@ class MessageApiConversation extends AbstractController
     public function postMessage(Request $request): JsonResponse
     {
         $user = $this->getUser();
+
+        if (!$user) {
+            return new JsonResponse(["error" => "not_connected"], 400);
+        }
+
         $data = json_decode($request->getContent(), true);
+        $data["owner"] = $user->getId();
 
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -71,11 +77,7 @@ class MessageApiConversation extends AbstractController
 
         $conversation = $message->getConversation();
 
-        if (!$user) {
-            return new JsonResponse(["error" => "not_connected"], 400);
-        } else if (!in_array($user, $conversation->getUsers()->toArray())) {
-            return new JsonResponse(["error" => "access_denied"], 403);
-        } else if ($user !== $message->getOwner()) {
+        if (!in_array($user, $conversation->getUsers()->toArray())) {
             return new JsonResponse(["error" => "access_denied"], 403);
         }
 
