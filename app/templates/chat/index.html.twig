@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+
+    <div x-data="data_chat" class="min-h-screen">
+        <div class="min-w-full min-h-screen border rounded lg:grid lg:grid-cols-3">
+
+            {# side bar #}
+            {{ render(controller('App\\Controller\\Chat\\SideBarController::sidebar')) }}
+
+            <div class="hidden lg:col-span-2 lg:block">
+                <div class="w-full">
+                    {% include "chat/container/messages.html.twig" %}
+                    {% include "chat/form/message.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('chat') }}
+{% endblock %}

@@ -1,0 +1,28 @@
+<div class="border-r border-gray-300 lg:col-span-1">
+
+    {% include "chat/form/search.html.twig" %}
+    <h2 class="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
+    <ul style="min-height: calc(100vh - 180px)" class="overflow-auto h-[32rem]">
+        {% for conversation in conversations %}
+            <li @click="select_conversation('{{ conversation.id }}')"
+                data-company="{{ conversation.id }}"
+            >
+                <a data-conversation="{{ conversation.id }}" class="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                    <div class="w-full pb-2">
+                        <div class="flex justify-between">
+                            <span class="block ml-2 font-semibold text-gray-600">{{ conversation.name }}</span>
+                        </div>
+                        {% if conversation.lastMessage %}
+                            <span class="block ml-2 text-sm text-gray-600">{{ conversation.lastMessage.content }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

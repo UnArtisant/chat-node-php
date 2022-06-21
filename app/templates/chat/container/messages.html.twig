@@ -1,0 +1,21 @@
+<template x-if="conversation !== null">
+    <div style="min-height: calc(100vh - 80px)" class="relative w-full p-6 overflow-y-auto">
+        <ul class="space-y-2">
+            <template x-for="message in conversation.messages">
+                <li x-bind:class="message.owner.id !== {{ app.user.id }} ? 'justify-start' : 'justify-end'" class="flex justify-start">
+                    <div x-bind:class="message.owner.id === {{ app.user.id }} ? 'bg-white' : 'bg-gray-700 text-white'" class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+                        <span class="block" x-text="message.content"></span>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </div>
+</template>
+<template x-if="conversation === null">
+    <div class="flex justify-center items-center flex-col w-full py-12 px-20 min-h-screen">
+        <div class="">
+            <img class="max-w-2xl mx-auto" src="{{ asset("build/images/svg/message.svg") }}" alt="messages">
+            <h2 class="font-medium leading-tight text-5xl mt-0 mb-2 text-center mt-20">Ouvrir une conversation</h2>
+        </div>
+    </div>
+</template>
